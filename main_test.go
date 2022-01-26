@@ -18,9 +18,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Vertamedia/chproxy/cache"
-	"github.com/Vertamedia/chproxy/config"
-	"github.com/Vertamedia/chproxy/log"
+	"github.com/contentsquare/chproxy/cache"
+	"github.com/contentsquare/chproxy/config"
+	"github.com/contentsquare/chproxy/log"
 )
 
 var testDir = "./temp-test-data"
