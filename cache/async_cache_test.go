@@ -60,12 +60,12 @@ func TestAsyncCache_AwaitForConcurrentTransaction_GraceTimeWithoutTransactionCom
 	}
 
 	startTime := time.Now()
-	done := asyncCache.AwaitForConcurrentTransaction(key)
+	transactionResult := asyncCache.AwaitForConcurrentTransaction(key)
 	elapsedTime := time.Since(startTime)
 
 	// in order to let the cleaner swipe the transaction
 	time.Sleep(100 * time.Millisecond)
-	if done == asyncCache.IsDone(key) && done {
+	if transactionResult.Completed == asyncCache.IsDone(key) && transactionResult.Completed {
 		t.Fatalf("unexpected behaviour: transaction awaiting time elapsed %s", elapsedTime.String())
 	}
 
@@ -96,7 +96,7 @@ func TestAsyncCache_AwaitForConcurrentTransaction_TransactionCompletedWhileAwait
 	}()
 
 	startTime := time.Now()
-	done := asyncCache.AwaitForConcurrentTransaction(key)
+	transactionResult := asyncCache.AwaitForConcurrentTransaction(key)
 	elapsedTime := time.Since(startTime)
 
 	err := <-errs
@@ -104,7 +104,7 @@ func TestAsyncCache_AwaitForConcurrentTransaction_TransactionCompletedWhileAwait
 		t.Fatalf("unexpected error: %s failed to unregister transaction", err)
 	}
 
-	if done != asyncCache.IsDone(key) || !done || elapsedTime >= graceTime {
+	if transactionResult.Completed != asyncCache.IsDone(key) || !transactionResult.Completed || elapsedTime >= graceTime {
 		t.Fatalf("unexpected behaviour: transaction awaiting time elapsed %s", elapsedTime.String())
 	}
 
