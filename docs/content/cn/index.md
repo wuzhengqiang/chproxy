@@ -683,6 +683,6 @@ clusters:
 
 *  *`chproxy`  是否支持 ClickHouse 的 Native 协议？*
 
-  不支持，应为我们所有的所有的应用只通过 HTTP 协议与 ClickHouse 通讯。
+  不支持，因为我们所有的应用只通过 HTTP/HTTPS 协议与 ClickHouse 通讯。
 
   可能会在未来增加对 Native 协议的支持。
